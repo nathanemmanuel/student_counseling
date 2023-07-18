@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Student Counseling Platform</title>
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <h1>Student Counseling Platform</h1>
+        <!-- Add navigation links for login, registration, and dashboard here -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Our Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        <!-- Student Dashboard -->
+        <section id="student-dashboard">
+            <h2>Welcome, [Student Name]!</h2>
+            <!-- Display student appointments here -->
+            <div id="appointments">
+                {% for appointment in appointments %}
+                <div class="appointment-card">
+                    <h3>Appointment with {{ appointment.counselor_name }}</h3>
+                    <p>Date: {{ appointment.date }}</p>
+                    <p>Time: {{ appointment.time }}</p>
+                    <p>Location: {{ appointment.location }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Real-time messaging section -->
+            <section id="messaging-section">
+                <h2>Messages</h2>
+                <!-- Display real-time messages here -->
+                <div id="messages">
+                    {% for message in messages %}
+                    <div class="message">
+                        <p>{{ message.sender }}: {{ message.message }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Messaging input field -->
+                <form id="message-form">
+                    <input type="text" id="message-input" placeholder="Type your message...">
+                    <button type="button" onclick="sendMessage()">Send</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <!-- Footer section -->
+    <footer>
+        <p>&copy; 2023 Student Counseling Platform. All rights reserved.</p>
+    </footer>
+    <!-- JavaScript -->
+    <script>
+        // Function to send a message
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            // Code to send the message to the server and update the messages section
+           
+
+
+            // Clear the message input after sending
+            
+            document.addEventListener("DOMContentLoaded", function () {
+    const messageForm = document.getElementById("message-form");
+    const messageInput = document.getElementById("message-input");
+    const messagesContainer = document.getElementById("messages");
+
+    messageForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const message = messageInput.value;
+      if (!message) {
+        return;
+      }
+
+      // Perform AJAX request to the server to send the message
+      // Replace 'your_server_endpoint' with the actual endpoint URL to handle the message on the server-side
+      fetch('your_server_endpoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any necessary headers, e.g., authentication token, CSRF token
+        },
+        body: JSON.stringify({ message: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the server response if needed
+        // For example, you can update the UI or display a success message
+      })
+      .catch(error => {
+        // Handle any error that occurs during the AJAX request
+        console.error('Error:', error);
+      });
+
+      // Clear the input field after sending the message
+      messageInput.value = '';
+    });
+  });
+        }
+    </script>
+</body>
+</html>
